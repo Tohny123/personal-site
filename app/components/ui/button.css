@@ -1,0 +1,14 @@
+button {
+    /* transition:cubic-bezier(); */
+    font-size: 24px;
+    color:white;
+    border-radius: 15px;
+    border-width:2px;
+    border-color:blue;
+    padding: 8px 23px;
+    transition-duration: 0.1s;
+    background-color: purple;
+}
+button:hover{
+    background-color: green;
+}
