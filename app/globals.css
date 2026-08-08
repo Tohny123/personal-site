@@ -3,6 +3,28 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* primary gradients for the entire site ( mostly for buttons )*/
+  --gradient-highlight: rgba(55, 142, 255, 0.4) ;
+  --gradient-shadow: rgba(9, 101, 207, 0.4); 
+  /* ik the gradient syntax looks repetitive, but its better in context lmao*/
+  --main-gradient: linear-gradient(180deg, rgba(118, 193, 255, 0.3) 0%, rgba(255,255,255, 0) 25%, rgba(0,0,0,0) 75%, rgba(0, 45, 97, 0.3) 100%),
+  linear-gradient(60deg ,
+  var(--gradient-highlight) 14%, 
+  var(--gradient-shadow) 16%, 
+  var(--gradient-highlight) 49%, 
+  var(--gradient-shadow) 51%, 
+  var(--gradient-highlight) 84%, 
+  var(--gradient-shadow) 86%);
+
+
+  --light-shine: linear-gradient(00deg, white 0%, rgba(255,255,255, 0));
+  --border-gradient: linear-gradient(90deg,rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
+
+
+  /*text styling*/
+  --text-color: linear-gradient(180deg, white 40%, transparent 100%);
+
 }
 
 @theme inline {
@@ -26,6 +48,14 @@ body {
   font-size: 24pt;
 }
 
+.primary_header {
+  filter: drop-shadow(0px 5px 3px rgba(0,0,0,0.3));
+  background: linear-gradient(180deg, white 40%, transparent 100%);
+  font-size: 160pt;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+} 
 
 h1 {
   font-family: Jura, sans-serif;
@@ -48,4 +78,3 @@ p {
   font-family: Rubik, sans-serif;
   font-size: 24pt;
 }
-

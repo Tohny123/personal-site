@@ -4,7 +4,7 @@ const showBack: boolean = true
 
 export function Header () {
   return (
-    <div className='bg-red-400/75 p-4 w-full flex items-center justify-center sticky top-0'>
+    <div className='z-100 bg-gray-600 p-4 w-full flex items-center justify-center sticky top-0'>
       <div className='  flex-auto'>
         {showBack ? <Button /> : ''}
       </div>
