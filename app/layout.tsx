@@ -36,7 +36,7 @@ export default function RootLayout ({ children }: Readonly<{ children: React.Rea
     >
       <body className='min-h-full flex flex-col'>
         {/*<Background className='fixed w-full h-full -z-10' />*/}
-        <div className='bg-blue-300 fixed w-screen h-screen -z-10'>ADSd</div> { /*background TEMPORARY TODO CHANGE LATER */}
+        <div className='bg-blue-300 fixed w-screen h-screen -z-10'></div> { /*background TEMPORARY TODO CHANGE LATER */}
         <Header />
         {children}
         <Footer />

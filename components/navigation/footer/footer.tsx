@@ -6,6 +6,7 @@ import heartIcon from "./components/hearticon.svg"
 import Image from "next/image";
 
 /**linkedin and github icons are both from akar-icons, all other icons should be from google material icons */
+//TODO: ideally i should render the svgs as NOT an <Image> element, bc that element is pretty limited, but that is for later
 
 function linkElement(icon: string, alt: string, text: string, link: string, linkText: string) {
   const iconScale: number = 35;
@@ -29,7 +30,7 @@ function linkElement(icon: string, alt: string, text: string, link: string, link
 
 export function Footer() {
   return (
-    <div className="footer grid grid-cols-5 p-14 pb-25">
+    <footer className="footer grid grid-cols-5 p-14 pb-25">
       <div className=" justify-center items-center col-span-2 px-25 flex flex-col gap-5">
         <h2 className="thanks-text text-center text-base/19 "> Thanks for stopping by! </h2>
         <Image className="invert" src = {heartIcon} width={60} height={60} alt="Thank you! <3"/>
@@ -49,6 +50,6 @@ export function Footer() {
           </li>
         </ul>
       </div>
-    </div>
+    </footer>
   );
 }
