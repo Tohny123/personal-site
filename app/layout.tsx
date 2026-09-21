@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 // import { Geist, Geist_Mono } from "next/font/google";
 import { Jura, Rubik, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import { Header } from './components/navigation/header'
-import { Footer } from './components/navigation/footer'
-import { Background } from './components/background/background'
+import { Header } from '../components/navigation/header/header'
+import { Footer } from '../components/navigation/footer/footer'
+import { Background } from '../components/background/background'
 
 const jura = Jura({
   variable: '--font-jura',
@@ -35,7 +35,8 @@ export default function RootLayout ({ children }: Readonly<{ children: React.Rea
       }
     >
       <body className='min-h-full flex flex-col'>
-        <Background className='fixed w-full h-full -z-10' />
+        {/*<Background className='fixed w-full h-full -z-10' />*/}
+        <div className='bg-blue-300 fixed w-screen h-screen -z-10'>ADSd</div> { /*background TEMPORARY TODO CHANGE LATER */}
         <Header />
         {children}
         <Footer />

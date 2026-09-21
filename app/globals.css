@@ -1,80 +1,129 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 
-  /* primary gradients for the entire site ( mostly for buttons )*/
-  --gradient-highlight: rgba(55, 142, 255, 0.4) ;
-  --gradient-shadow: rgba(9, 101, 207, 0.4); 
-  /* ik the gradient syntax looks repetitive, but its better in context lmao*/
-  --main-gradient: linear-gradient(180deg, rgba(118, 193, 255, 0.3) 0%, rgba(255,255,255, 0) 25%, rgba(0,0,0,0) 75%, rgba(0, 45, 97, 0.3) 100%),
-  linear-gradient(60deg ,
-  var(--gradient-highlight) 14%, 
-  var(--gradient-shadow) 16%, 
-  var(--gradient-highlight) 49%, 
-  var(--gradient-shadow) 51%, 
-  var(--gradient-highlight) 84%, 
-  var(--gradient-shadow) 86%);
+    /* primary gradients for the entire site*/
+    --hightlight-lightblue: rgba(55, 142, 255, 0.4);
+    --shadow-lightblue: rgba(9, 101, 207, 0.4);
 
+    /*this is the blue background, rendered as a css gradient, we use 2 gradients, one as overlay one as background color*/
+    --gradient-lightblue:
+        linear-gradient(
+            180deg,
+            rgba(118, 193, 255, 0.3) 0%,
+            rgba(255, 255, 255, 0) 25%,
+            rgba(0, 0, 0, 0) 75%,
+            rgba(0, 45, 97, 0.3) 100%
+        ),
+        linear-gradient(
+            60deg,
+            var(--hightlight-lightblue) 14%,
+            var(--shadow-lightblue) 16%,
+            var(--hightlight-lightblue) 49%,
+            var(--shadow-lightblue) 51%,
+            var(--hightlight-lightblue) 84%,
+            var(--shadow-lightblue) 86%
+        );
 
-  --light-shine: linear-gradient(00deg, white 0%, rgba(255,255,255, 0));
-  --border-gradient: linear-gradient(90deg,rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
+    --hightlight-darkpurple: rgba(53, 52, 64, 0.4);
+    --shadow-darkpurple: rgba(35, 31, 80, 0.4);
 
+    --gradient-darkpurple:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255, 0.3) 0%,
+            rgba(255, 255, 255, 0) 25%,
+            rgba(0, 0, 0, 0) 75%,
+            rgba(0,0,0, 0.3) 100%
+        ),
+        linear-gradient(
+            60deg,
+            var(--hightlight-darkpurple) 14%,
+            var(--shadow-darkpurple) 16%,
+            var(--hightlight-darkpurple) 49%,
+            var(--shadow-darkpurple) 51%,
+            var(--hightlight-darkpurple) 84%,
+            var(--shadow-darkpurple) 86%
+        );
 
-  /*text styling*/
-  --text-color: linear-gradient(180deg, white 40%, transparent 100%);
+    --text-filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.3));
+    --text-bg: linear-gradient(180deg, white 40%, transparent 100%);
 
+    --light-shine: linear-gradient(00deg, white 0%, rgba(255, 255, 255, 0));
+    --border-gradient: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(0, 0, 0, 1) 100%
+    );
+
+    /*text styling*/
+    --text-color: linear-gradient(180deg, white 40%, transparent 100%);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-rubik);
-  --font-mono: var(--font-jetbrains-mono);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-rubik);
+    --font-mono: var(--font-jetbrains-mono);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Rubik, sans-serif;
-  font-size: 24pt;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Rubik, sans-serif;
+    font-size: 24pt;
 }
 
 .primary_header {
-  filter: drop-shadow(0px 5px 3px rgba(0,0,0,0.3));
-  background: linear-gradient(180deg, white 40%, transparent 100%);
-  font-size: 160pt;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-} 
+    filter: var(--text-filter);
+    background: var(--text-bg);
+    font-size: 160pt;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
 
 h1 {
-  font-family: Jura, sans-serif;
-  font-size: 64pt;
-  font-weight: bold;
+    font-family: Jura, sans-serif;
+    font-size: 64pt;
+    font-weight: bold;
 }
 
 h2 {
-  font-family: Jura, sans-serif;
-  font-size: 48pt;
+    font-family: Jura, sans-serif;
+    font-size: 48pt;
 }
 
 h3 {
-  font-family: Rubik, sans-serif;
-  font-size: 32pt;
-  font-weight: bold;
+    font-family: Rubik, sans-serif;
+    font-size: 32pt;
+    font-weight: bold;
 }
 
 p {
-  font-family: Rubik, sans-serif;
-  font-size: 24pt;
+    font-family: Rubik, sans-serif;
+    font-size: 24pt;
+}
+
+/*this is for shared styling*/
+h1,
+h2,
+h3,
+h4,
+h5 {
+    /*text colors*/
+    filter: var(--text-filter);
+    background: var(--text-bg);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }

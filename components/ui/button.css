@@ -1,10 +1,9 @@
-
 button {
     /* transition:cubic-bezier(); */
     font-size: 24px;
     font-weight: 100;
     color:white;
-    background: var(--main-gradient);
+    background: var(--gradient-lightblue);
     backdrop-filter: blur(10px);
 
     border-width: 2px;

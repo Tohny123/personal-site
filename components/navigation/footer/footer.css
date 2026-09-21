@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+.footer {
+    background: var(--gradient-darkpurple);
+    backdrop-filter: blur(10px);
+    border-width: 2px;
+    border-style: solid solid none solid;
+    border-color: white;
+    border-radius: 15px 15px 0 0;
+}
+
+a {
+    color:lightblue;
+    text-decoration: underline;
+    
+}
+.thanks-text {
+    color:white;
+    -webkit-text-fill-color: white;
+}
