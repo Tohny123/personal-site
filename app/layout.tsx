@@ -25,21 +25,22 @@ export const metadata: Metadata = {
 }
 
 // TODO: uncomment non bg elements when done
-export default function RootLayout ({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang='en'
-      // className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       className={
         `${jura.variable} ${rubik.variable} ${jetBrainsMono.variable} h-full antialiased`
       }
     >
       <body className='min-h-full flex flex-col'>
         {/* <Background className='fixed w-full h-full -z-10' /> */}
-        <div className='bg-blue-300 fixed w-screen h-screen -z-10'></div> 
-        { /*background TEMPORARY TODO CHANGE LATER */}
+        <div className='bg-[#7096d4] fixed w-screen h-screen -z-10' />
+        { /*^^^^ TEMPORARY TODO CHANGE LATER */}
         <Header />
-        {children}
+        <div className='flex flex-col flex-1 items-center justify-center font-sans '>
+          {children}
+        </div>
         <Footer />
       </body>
     </html>

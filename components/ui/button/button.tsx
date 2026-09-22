@@ -9,8 +9,6 @@ interface buttonTypes {
 }
 
 export function Button({ Icon, text = "TEXT", href = "/" }: buttonTypes) {
-
-  
   return (
     <Link href={href}>
       <button className='flex flex-row gap-3 items-center'>

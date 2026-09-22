@@ -1,9 +1,11 @@
-import { Background } from '../components/Background.1'
-
-export default function BlogHome () {
+import blogCard from "./components/blogCard/blogCard"
+export default function BlogHome() {
   return (
-    <div className='flex flex-1 w-full max-w-7xl flex-col items-center justify-between py-20 px-20 sm:items-start'>
+    <div className="w-full flex flex-col w-full max-w-7xl gap-10">
       <h1>Blog!</h1>
+      <div className="w-full grid grid-cols-3 gap-4">
+        {blogCard()} {blogCard()} {blogCard()} {blogCard()} {blogCard()} {blogCard()} {blogCard()} {blogCard()} {blogCard()} {blogCard()} {/**Temporary blog for layout Will be dynamic later*/}
+      </div>
     </div>
   )
 }

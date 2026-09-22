@@ -7,22 +7,23 @@
     border-style: solid solid none solid;
     border-color: white;
     border-radius: 15px 15px 0 0;
-    box-shadow: 0px -2px 20px rgba(0,0,0,0.3);
+    box-shadow: 0px -2px 20px rgba(0, 0, 0, 0.3);
 
 }
 
 .footer-link {
     color: lightblue;
     text-decoration: underline;
-
+    transition: all;
+    transition-duration: 250ms;
 }
 
-a {
-    color: lightblue;
-    text-decoration: underline;
+.footer-link:hover {
+    color: darkblue;
+    font-weight: 500;
+
 
 }
-
 .thanks-text {
     color: white;
     -webkit-text-fill-color: white;
