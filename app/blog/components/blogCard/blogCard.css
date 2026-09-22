@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+.blog-card {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.blog-description {
+    background-color: var(--gradient-darkpurple);
+}

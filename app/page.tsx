@@ -11,7 +11,6 @@ export default function Home() {
         <h2> H2 Header </h2>
         <h3> H3 Header </h3>
         <p> This is a paragraph. </p>
-        <Button showLabel={false} text='go to blog' href='/blog' />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mollis urna nisi, in ultrices augue dictum ac. Quisque a ultricies tortor. Vestibulum volutpat nisi vehicula neque faucibus, sed imperdiet arcu laoreet. Donec arcu felis, malesuada sed aliquam vel, congue eu eros. Vestibulum condimentum justo non tellus sollicitudin porta. Nam ante mauris, posuere id sapien bibendum, fermentum consectetur sem. Maecenas tincidunt justo sit amet metus venenatis accumsan.
           Donec congue vehicula volutpat. Proin molestie lacus ac mauris sodales consequat. Nullam fermentum id quam nec bibendum. Aliquam id urna at enim bibendum eleifend. Integer varius in lacus non interdum. Nulla nec pulvinar elit, ut ultricies tellus. Aliquam sodales varius sem, ornare porttitor dolor. Nunc dapibus, libero ut tincidunt lobortis, leo magna volutpat arcu, non finibus elit magna a sapien.

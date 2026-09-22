@@ -2,8 +2,8 @@
 import "./header.css"
 import { Button } from '../../ui/button'
 import { HideHeader } from "./hideHeader"
-
-
+import { PiHouse } from "react-icons/pi";
+import { PiBookOpen } from "react-icons/pi";
 
 
 export function Header() {
@@ -14,13 +14,13 @@ export function Header() {
   return (
     <div className={headerClass}>
       <div className='flex-auto'>
-        <Button />
+        <Button Icon = {PiHouse} text="Home" href="/"/>
       </div>
 
       <div className=' flex-auto flex flex-row justify-end gap-3'>
-        <Button text='Hi' showLabel={false} />
-        <Button text='Hi2' />
-        <Button text='Hi3' />
+{/* ?        <Button text='Hi2' /> */}
+        <Button Icon = {PiBookOpen} text='go to blog' href='/blog' />
+        {/* <Button text='Hi3' /> */}
       </div>
     </div>
   )
