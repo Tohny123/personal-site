@@ -21,7 +21,7 @@ function linkElement(icon: string, alt: string, text: string, link: string, link
         height={iconScale}
       />}
       <div className="flex flex-row gap-2 items-center">
-        {text} <a href={link}>{linkText}</a>
+        {text} <a className="footer-link" href={link}>{linkText}</a>
       </div>
     </div>
   )
@@ -33,7 +33,7 @@ export function Footer() {
     <footer className="footer grid grid-cols-5 p-14 pb-25">
       <div className=" justify-center items-center col-span-2 px-25 flex flex-col gap-5">
         <h2 className="thanks-text text-center text-base/19 "> Thanks for stopping by! </h2>
-        <Image className="invert" src = {heartIcon} width={60} height={60} alt="Thank you! <3"/>
+        <Image className="invert" src={heartIcon} width={60} height={60} alt="Thank you! <3" />
 
       </div>
       <div className="col-span-3 p-2 text-white">

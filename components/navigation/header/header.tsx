@@ -1,19 +1,19 @@
 'use client'; //im not sure this is the *best* but idk how else to call elements of the client
+import "./header.css"
 import { Button } from '../../ui/button'
-import {  HideHeader } from "./hideHeader"
+import { HideHeader } from "./hideHeader"
 
 
 
 
 export function Header() {
-  const isHidden : boolean = HideHeader();
+  const isHidden: boolean = HideHeader();
   //default consts of the header, and we adjust the offsets depending on scrollDirection
-  const headerClass = 'z-100 bg-gray-600 p-4 w-full flex items-center justify-center sticky h-24 transition-all duration-500' + 
-  (isHidden ? " \-top-24" : " top-0");
-
+  const headerClass = 'sticky header z-100 p-4 w-full flex items-center justify-center  h-24' +
+    (isHidden ? " -top-24" : " top-0");
   return (
     <div className={headerClass}>
-      <div className='  flex-auto'>
+      <div className='flex-auto'>
         <Button />
       </div>
 

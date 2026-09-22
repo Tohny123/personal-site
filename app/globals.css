@@ -58,6 +58,9 @@
         rgba(0, 0, 0, 1) 100%
     );
 
+    /*animations*/
+    --main-transition: cubic-bezier(.75, .01, .23, 1.38);
+    
     /*text styling*/
     --text-color: linear-gradient(180deg, white 40%, transparent 100%);
 }

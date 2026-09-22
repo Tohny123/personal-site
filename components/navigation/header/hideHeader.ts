@@ -31,13 +31,13 @@ function useMousePos() {
     const [mousePos, setMousePos] = useState<number>(0);
 
     useEffect(() => {
-        const updateMousePos = (e) => {
+        const updateMousePos = (e: MouseEvent) : void => {
             setMousePos(e.clientY)
         }
     window.addEventListener("mousemove", updateMousePos)
     
     return () => {
-    window.removeEventListener("mouseMove", updateMousePos)
+    window.removeEventListener("mousemove", updateMousePos)
     }
     }, [mousePos])
     return mousePos
@@ -47,7 +47,5 @@ export function HideHeader() : boolean {
 
     const scrollDirecton = useScrollDirection()
     const mousePos = useMousePos()
-    console.log(mousePos)
-
     return scrollDirecton === "down" && mousePos > 100;
 }
