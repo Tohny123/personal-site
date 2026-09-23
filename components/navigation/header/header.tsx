@@ -4,7 +4,7 @@ import { Button } from '../../ui/button/button'
 import { HideHeader } from "./hideHeader"
 import { PiHouse } from "react-icons/pi";
 import { PiBookOpen } from "react-icons/pi";
-
+import { PiHammer } from "react-icons/pi";
 
 export function Header() {
   const isHidden: boolean = HideHeader();
@@ -14,12 +14,14 @@ export function Header() {
   return (
     <div className={headerClass}>
       <div className='flex-auto'>
-        <Button Icon = {PiHouse} text="Home" href="/"/>
+        <Button Icon={PiHouse} text="Home" href="/" />
       </div>
 
       <div className=' flex-auto flex flex-row justify-end gap-3'>
-{/* ?        <Button text='Hi2' /> */}
-        <Button Icon = {PiBookOpen} text='Blog' href='/blog' />
+        {/* ?        <Button text='Hi2' /> */}
+        <Button Icon={PiBookOpen} text='Blog' href='/blog' />
+        <Button Icon={PiHammer} text='Projects' href='/projects' />
+
         {/* <Button text='Hi3' /> */}
       </div>
     </div>
