@@ -7,7 +7,6 @@ export default function BlogHome() {
   return (
     <div className="w-full flex flex-col w-full max-w-7xl gap-10">
       <h1>Blog!</h1>
-      <Button Icon={undefined} text="go to test page" href="/blog/postTest" />
       <div className="w-full grid grid-cols-3 gap-4">
         {
           currentPosts.map(slug => (

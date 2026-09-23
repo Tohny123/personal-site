@@ -4,16 +4,16 @@ import Link from 'next/link'
 
 interface buttonTypes {
   Icon?: IconType,
-  text: string,
+  text?: string,
   href: string,
 }
 
-export function Button({ Icon, text = "TEXT", href = "/" }: buttonTypes) {
+export function Button({ Icon, text, href = "/" }: buttonTypes) {
   return (
     <Link href={href}>
       <button className='flex flex-row gap-3 items-center'>
         {Icon ? <Icon size={26}/> : ' '}
-        {text}
+        {text ? text : ''}
       </button>
     </Link>
   )

@@ -15,7 +15,7 @@ export default async function Page({
   return (
     <div>
       <h1>Title: {postMeta.title}</h1>
-      <div className='prose bg-gray-500'> 
+      <div className='prose bg-gray-500 w-full flex flex-grow flex-col'> 
         <Post />
       </div>
     </div>

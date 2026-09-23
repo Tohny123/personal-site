@@ -2,6 +2,5 @@
     "title" : "This is a test post!",
     "publishedDate" : "2026-9-23",
     "summary" : "This is a test of how I want to lay out the blogs from now on",
-    "image_url" : null
-
+    "tags":["Test", "Test2"]
 }

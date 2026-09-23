@@ -2,6 +2,7 @@
 @plugin "@tailwindcss/typography";
 
 
+
 :root {
     --background: #ffffff;
     --foreground: #171717;
@@ -12,57 +13,47 @@
 
     /*this is the blue background, rendered as a css gradient, we use 2 gradients, one as overlay one as background color*/
     --gradient-lightblue:
-        linear-gradient(
-            180deg,
+        linear-gradient(180deg,
             rgba(118, 193, 255, 0.3) 0%,
             rgba(255, 255, 255, 0) 25%,
             rgba(0, 0, 0, 0) 75%,
-            rgba(0, 45, 97, 0.3) 100%
-        ),
-        linear-gradient(
-            60deg,
+            rgba(0, 45, 97, 0.3) 100%),
+        linear-gradient(60deg,
             var(--hightlight-lightblue) 14%,
             var(--shadow-lightblue) 16%,
             var(--hightlight-lightblue) 49%,
             var(--shadow-lightblue) 51%,
             var(--hightlight-lightblue) 84%,
-            var(--shadow-lightblue) 86%
-        );
+            var(--shadow-lightblue) 86%);
 
     --hightlight-darkpurple: rgba(53, 52, 64, 0.4);
     --shadow-darkpurple: rgba(35, 31, 80, 0.4);
 
     --gradient-darkpurple:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255, 0.3) 0%,
+        linear-gradient(180deg,
+            rgba(255, 255, 255, 0.3) 0%,
             rgba(255, 255, 255, 0) 25%,
             rgba(0, 0, 0, 0) 75%,
-            rgba(0,0,0, 0.3) 100%
-        ),
-        linear-gradient(
-            60deg,
+            rgba(0, 0, 0, 0.3) 100%),
+        linear-gradient(60deg,
             var(--hightlight-darkpurple) 14%,
             var(--shadow-darkpurple) 16%,
             var(--hightlight-darkpurple) 49%,
             var(--shadow-darkpurple) 51%,
             var(--hightlight-darkpurple) 84%,
-            var(--shadow-darkpurple) 86%
-        );
+            var(--shadow-darkpurple) 86%);
 
     --text-filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.3));
     --text-bg: linear-gradient(180deg, white 40%, transparent 100%);
 
     --light-shine: linear-gradient(00deg, white 0%, rgba(255, 255, 255, 0));
-    --border-gradient: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(0, 0, 0, 1) 100%
-    );
+    --border-gradient: linear-gradient(90deg,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(0, 0, 0, 1) 100%);
 
     /*animations*/
     --main-transition: cubic-bezier(.75, .01, .23, 1.38);
-    
+
     /*text styling*/
     --text-color: linear-gradient(180deg, white 40%, transparent 100%);
 }

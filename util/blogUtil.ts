@@ -12,6 +12,7 @@ export type postMeta = {
     "publishedDate": string,
     "summary": string,
     "image_url"?: string
+    "tags"?: string[]
 }
 
 export function listPosts(): string[] {
@@ -22,7 +23,7 @@ export function listPosts(): string[] {
     const folders: string[] = fs.readdirSync(BLOG_POST_DIR);
     folders.forEach(folderName => { //check if there aren't folders in the posts dir
         const curDir: string = path.join(BLOG_POST_DIR, folderName)
-        if(!fs.statSync(curDir).isDirectory()){
+        if (!fs.statSync(curDir).isDirectory()) {
             console.log(folderName)
             throw new Error("Folder has forbidden character or isn't folder")
         }
@@ -34,14 +35,24 @@ function isPostMeta(data: unknown): data is postMeta {
     /**
      * validate if the format of meta.json is correct or not 
      */
-    return (
-        data != null &&
-        typeof data === 'object' &&
-        typeof (data as Record<string, unknown>).title === 'string' &&
-        typeof (data as Record<string, unknown>).publishedDate === 'string' &&
-        typeof (data as Record<string, unknown>).summary === 'string' &&
-        (typeof (data as Record<string, unknown>).title === 'string' || typeof (data as Record<string, unknown>).title === undefined)
-    );
+    if (data != null && typeof data === 'object') {
+        if (Object.hasOwn(data, "image_url") && typeof (data as Record<string, unknown>).image_url !== "string") {
+            return false;
+        }
+        if (Object.hasOwn(data, "tags") &&
+            (!Array.isArray((data as Record<string, unknown>).tags) ||
+            !((data as Record<string, unknown>).tags as unknown[]).every(item => typeof item === "string"))
+        ) {
+            return false;
+        }
+        return (
+            typeof (data as Record<string, unknown>).title === 'string' &&
+            typeof (data as Record<string, unknown>).publishedDate === 'string' &&
+            typeof (data as Record<string, unknown>).summary === 'string')
+    } else {
+        return false;
+    }
+
 
 }
 
