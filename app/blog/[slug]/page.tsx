@@ -1,5 +1,8 @@
 import { listPosts, getMeta, postMeta } from '@/util/blogUtil'
 import { notFound } from 'next/navigation';
+import { tagList } from '../_components/tagList/tagList';
+import { publishDate } from '../_components/publishDate/publishDate';
+import "./blogPage.css"
 export default async function Page({
   params,
 }: {
@@ -13,9 +16,11 @@ export default async function Page({
   const postMeta: postMeta = await getMeta(slug)
 
   return (
-    <div>
-      <h1>Title: {postMeta.title}</h1>
-      <div className='prose bg-gray-500 w-full flex flex-grow flex-col'> 
+    <div className="flex grow flex-col max-w-[75%] justify-center gap-10">
+      <h1>{postMeta.title}</h1>
+      <h4 className="text-4xl">{tagList(postMeta.tags)}</h4>
+      <h4 className="text-4xl">{publishDate(postMeta.publishedDate)}</h4>
+      <div className='blog-text prose max-w-none w-full'>
         <Post />
       </div>
     </div>

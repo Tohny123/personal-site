@@ -1,13 +1,13 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@theme {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-rubik);
+    --font-mono: var(--font-jetbrains-mono);
 
-
-:root {
-    --background: #ffffff;
-    --foreground: #171717;
-
-    /* primary gradients for the entire site*/
+        /* primary gradients for the entire site*/
     --hightlight-lightblue: rgba(55, 142, 255, 0.4);
     --shadow-lightblue: rgba(9, 101, 207, 0.4);
 
@@ -58,12 +58,62 @@
     --text-color: linear-gradient(180deg, white 40%, transparent 100%);
 }
 
-@theme inline {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    --font-sans: var(--font-rubik);
-    --font-mono: var(--font-jetbrains-mono);
+
+:root {
+    --background: #ffffff;
+    --foreground: #171717;
+
+    /* primary gradients for the entire site */
+    /* --hightlight-lightblue: rgba(55, 142, 255, 0.4);
+    --shadow-lightblue: rgba(9, 101, 207, 0.4); */
+
+    /*this is the blue background, rendered as a css gradient, we use 2 gradients, one as overlay one as background color*/
+    /* --gradient-lightblue:
+        linear-gradient(180deg,
+            rgba(118, 193, 255, 0.3) 0%,
+            rgba(255, 255, 255, 0) 25%,
+            rgba(0, 0, 0, 0) 75%,
+            rgba(0, 45, 97, 0.3) 100%),
+        linear-gradient(60deg,
+            var(--hightlight-lightblue) 14%,
+            var(--shadow-lightblue) 16%,
+            var(--hightlight-lightblue) 49%,
+            var(--shadow-lightblue) 51%,
+            var(--hightlight-lightblue) 84%,
+            var(--shadow-lightblue) 86%);
+
+    --hightlight-darkpurple: rgba(53, 52, 64, 0.4);
+    --shadow-darkpurple: rgba(35, 31, 80, 0.4);
+
+    --gradient-darkpurple:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(255, 255, 255, 0) 25%,
+            rgba(0, 0, 0, 0) 75%,
+            rgba(0, 0, 0, 0.3) 100%),
+        linear-gradient(60deg,
+            var(--hightlight-darkpurple) 14%,
+            var(--shadow-darkpurple) 16%,
+            var(--hightlight-darkpurple) 49%,
+            var(--shadow-darkpurple) 51%,
+            var(--hightlight-darkpurple) 84%,
+            var(--shadow-darkpurple) 86%);
+
+    --text-filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.3));
+    --text-bg: linear-gradient(180deg, white 40%, transparent 100%);
+
+    --light-shine: linear-gradient(00deg, white 0%, rgba(255, 255, 255, 0));
+    --border-gradient: linear-gradient(90deg,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(0, 0, 0, 1) 100%); */
+
+    /*animations*/
+    /* --main-transition: cubic-bezier(.75, .01, .23, 1.38); */
+
+    /*text styling*/
+    /* --text-color: linear-gradient(180deg, white 40%, transparent 100%); */
 }
+
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -76,7 +126,7 @@ body {
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-rubik);
-    font-size: 24pt;
+    font-size: 16pt;
 }
 
 .primary_header {
@@ -96,18 +146,18 @@ h1 {
 
 h2 {
     font-family: var(--font-jura);
-    font-size: 48pt;
+    font-size: 32pt;
 }
 
 h3 {
     font-family: var(--font-rubik);
-    font-size: 32pt;
+    font-size: 26pt;
     font-weight: bold;
 }
 
 p {
     font-family: var(--font-rubik);
-    font-size: 24pt;
+    font-size: 16pt;
 }
 
 /*this is for shared styling*/

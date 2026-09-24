@@ -1,11 +1,15 @@
-@import "tailwindcss";
-
 .blog-card {
     display: flex;
     flex-direction: column;
+    transition: all;
+    transition-duration: 250ms;
     
+}
+.blog-card:hover{
+    background-color: rgba(0,0,0,0.2);
 }
 
 .blog-description {
-    background-color: var(--gradient-darkpurple);
+    background: var(--gradient-darkpurple);
+    color: white
 }

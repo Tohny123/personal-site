@@ -4,7 +4,7 @@
 export default function Home() {
   return (
     <main className='flex flex-1 w-full max-w-7xl flex-col items-center justify-between py-16 px-16 sm:items-start'>
-      <h1>Welcome to my site!</h1>
+      <h1 className="primary_header">Welcome to my site!</h1>
     </main>
   )
 }

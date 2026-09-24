@@ -1,0 +1,9 @@
+.blog-text {
+    background: var(--gradient-darkpurple);
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    border-radius: 0.75rem;
+    padding: 5rem;
+    color: white;
+}
