@@ -1,8 +1,6 @@
-import "./taglist.css"
-
 function tagElement(tagName: string) {
     return (
-        <div className="tagElement" key={tagName}>
+        <div className="rounded-3xl bg-amber-500 px-4 py-1 font-normal" key={tagName}>
             {tagName}
         </div>
     )

@@ -1,5 +1,4 @@
 import { IconType } from 'react-icons'
-import './button.css'
 import Link from 'next/link'
 
 interface buttonTypes {

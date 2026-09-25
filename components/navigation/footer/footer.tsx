@@ -1,4 +1,3 @@
-import "./footer.css";
 //Icons from https://react-icons.github.io/react-icons/ 
 import { PiEnvelope } from "react-icons/pi";
 import { PiLinkedinLogo } from "react-icons/pi";
@@ -14,7 +13,7 @@ function linkElement(Icon: IconType, text: string, link: string, linkText: strin
       <div className="relative flex flex-row gap-2 items-center">
         <Icon color="white" size={iconScale} />
         {text} <a 
-        className="footer-link" 
+        className="text-blue-300 hover:text-blue-800 hover:font-medium transition-all underline duration-250 " 
         href={link}
         target="_blank"
         rel="noopener noreferrer"
@@ -27,9 +26,9 @@ function linkElement(Icon: IconType, text: string, link: string, linkText: strin
 
 export function Footer() {
   return (
-    <footer className="footer grid grid-cols-2 p-14 pb-25">
+    <footer className="main-shadow backdrop-blur-md dark-gradient border-2 border-b-0 border-white footer rounded-t-3xl grid grid-cols-2 p-14 pb-25">
       <div className=" justify-center items-center col-span-1 px-25 flex flex-col gap-5">
-        <h2 className="thanks-text text-center text-base/19 "> Thanks for stopping by! </h2>
+        <h2 className="text-6xl text-center"> Thanks for stopping by! </h2>
         <PiHeart size={70} color="white" />
       </div>
       <div className="col-span-1 p-2 text-white">
