@@ -10,7 +10,7 @@ interface buttonTypes {
 export function Button({ Icon, text, href = "/" }: buttonTypes) {
   return (
     <Link href={href}>
-      <button className='flex flex-row gap-3 items-center'>
+      <button className='button before:gloss-effect flex flex-row gap-3 items-center'>
         {Icon ? <Icon size={26}/> : ' '}
         {text ? text : ''}
       </button>
