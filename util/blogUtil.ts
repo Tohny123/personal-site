@@ -1,78 +1,92 @@
 import fs from "fs";
 import path from "path";
-import { readFile } from 'node:fs/promises';
-
+import { readFile } from "node:fs/promises";
 
 // this should read the /blogPosts directory, get all the files, and provide a buncha resources, (like a list of slugs or the ability to get the last modified date / created date)
 
-const BLOG_POST_DIR = path.join(process.cwd(), 'content', 'blogPosts')
+const BLOG_POST_DIR = path.join(process.cwd(), "content", "blogPosts");
 
 export type postMeta = {
-    "title": string,
-    "publishedDate": string,
-    "summary": string,
-    "image_url"?: string
-    "tags"?: string[]
-}
+    title: string;
+    publishedDate: string;
+    summary: string;
+    image_url?: string;
+    image_alt?: string;
+    tags?: string[];
+};
 
 export function listPosts(): string[] {
     /**
-     * search through all the posts on the site, returns an array of slugs 
+     * search through all the posts on the site, returns an array of slugs
      * use only for initalization, since its blocking
      */
     const folders: string[] = fs.readdirSync(BLOG_POST_DIR);
-    folders.forEach(folderName => { //check if there aren't folders in the posts dir
-        const curDir: string = path.join(BLOG_POST_DIR, folderName)
+    folders.forEach((folderName) => {
+        //check if there aren't folders in the posts dir
+        const curDir: string = path.join(BLOG_POST_DIR, folderName);
         if (!fs.statSync(curDir).isDirectory()) {
-            console.log(folderName)
-            throw new Error("Folder has forbidden character or isn't folder")
+            console.log(folderName);
+            throw new Error("Folder has forbidden character or isn't folder");
         }
-    })
-    return folders
+    });
+    return folders;
 }
 
 function isPostMeta(data: unknown): data is postMeta {
     /**
-     * validate if the format of meta.json is correct or not 
+     * validate if the format of meta.json is correct or not
      */
-    if (data != null && typeof data === 'object') {
-        if (Object.hasOwn(data, "image_url") && typeof (data as Record<string, unknown>).image_url !== "string") {
+    if (data != null && typeof data === "object") {
+        if (
+            Object.hasOwn(data, "image_url") &&
+            typeof (data as Record<string, unknown>).image_url !== "string"
+        ) {
             return false;
         }
-        if (Object.hasOwn(data, "tags") &&
+
+        if (
+            Object.hasOwn(data, "image_alt") &&
+            typeof (data as Record<string, unknown>).image_alt !== "string" &&
+            Object.hasOwn(data, "image_url") //can't have image alt without image tag
+        ) {
+            return false;
+        }
+
+        if (
+            Object.hasOwn(data, "tags") &&
             (!Array.isArray((data as Record<string, unknown>).tags) ||
-            !((data as Record<string, unknown>).tags as unknown[]).every(item => typeof item === "string"))
+                !((data as Record<string, unknown>).tags as unknown[]).every(
+                    (item) => typeof item === "string",
+                ))
         ) {
             return false;
         }
         return (
-            typeof (data as Record<string, unknown>).title === 'string' &&
-            typeof (data as Record<string, unknown>).publishedDate === 'string' &&
-            typeof (data as Record<string, unknown>).summary === 'string')
+            typeof (data as Record<string, unknown>).title === "string" &&
+            typeof (data as Record<string, unknown>).publishedDate ===
+                "string" &&
+            typeof (data as Record<string, unknown>).summary === "string"
+        );
     } else {
         return false;
     }
-
-
 }
 
 export async function getMeta(post: string): Promise<postMeta> {
     /**
      * given a post slug, give its metadata
-     * 
+     *
      */
     try {
-        const fileDir = path.join(BLOG_POST_DIR, post, "meta.json")
-        const rawData = await readFile(fileDir, "utf-8")
-        const metaJson: postMeta = JSON.parse(rawData)
+        const fileDir = path.join(BLOG_POST_DIR, post, "meta.json");
+        const rawData = await readFile(fileDir, "utf-8");
+        const metaJson: postMeta = JSON.parse(rawData);
         if (!isPostMeta(metaJson)) {
-            throw new Error("Incorrect JSON format")
+            throw new Error("Incorrect JSON format");
         }
-        return metaJson
-    }
-    catch (err) {
-        console.error(err)
-        throw new Error("Can't read metadata!")
+        return metaJson;
+    } catch (err) {
+        console.error(err);
+        throw new Error("Can't read metadata!");
     }
 }
-
