@@ -3,7 +3,6 @@ import Link from "next/link";
 import { tagList } from "../tagList/tagList";
 import { publishDate } from "../publishDate/publishDate";
 import Image from "next/image";
-import { PiHourglass } from "react-icons/pi";
 import { Suspense } from "react";
 
 export default async function blogCard(slug: string) {
