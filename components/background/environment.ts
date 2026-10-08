@@ -2,11 +2,39 @@ import * as THREE from 'three'
 import Stats from 'three/addons/libs/stats.module.js'
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { Sky } from 'three/addons/objects/Sky.js'
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+import { Water } from 'three/addons/objects/Water.js';
+import { EffectComposer } from 'three/examples/jsm/Addons.js'
+			import { TAARenderPass } from 'three/addons/postprocessing/TAARenderPass.js';
 /**
- * This controls the 3D environment and lighting
+ * Controls the 3D Rendered background, might refactor so its inside of its own folder, bc this file is ALREADY kinda bulky
  *
  */
+
+//TODO LIST:
+/**
+ * - Clean up the setups into different files, makes it more managable
+ * - make it so that we aren't initializing the camera twice for no reason
+ * - make the comparisons better (No more comparing to null anymore eww)
+ * - fix anti aliasing
+ * - make loading into a promise, so the background has a loading animation while it loads in
+ * 
+ *
+ */
+
+
+
+//3d rendering globals
+let camera: THREE.PerspectiveCamera
+let renderer: THREE.WebGLRenderer
+let scene: THREE.Scene
+let timer: THREE.Timer
+
+let water: Water
+
+let model: THREE.Group<THREE.Object3DEventMap> // Collection of models in the 3d environment
+
 
 // CAMERA SETTINGS
 const fov = 75
@@ -14,35 +42,30 @@ const aspect = 2 // the canvas default
 const near = 0.1
 const far = 500000
 
-let camera: THREE.PerspectiveCamera
-let renderer: THREE.WebGLRenderer
-let scene: THREE.Scene
-
-function animate() {
-
-
-
-  renderer?.render(scene, camera)
+export function environment(canvas: HTMLCanvasElement) {
+  sceneSetup(canvas)
+  modelSetup()
+  waterSetup()
+  skySetup()
+  window.addEventListener('resize', resizeWindow)
 }
 
+function sceneSetup(canvas: HTMLCanvasElement) {
+  renderer = makeRenderer(canvas)
+  if (renderer === null) return
 
-// water.material.uniforms['sunDirection'].value.copy(sun).normalize();
+  camera = new THREE.PerspectiveCamera(fov, aspect, near, far) //maybe set up model before hand since that has the camera we need
 
-// if (renderTarget !== undefined) renderTarget.dispose();
+  timer = new THREE.Timer();
 
-// sceneEnv.add(sky);
-// renderTarget = pmremGenerator.fromScene(sceneEnv);
-// scene.add(sky);
+  resizeWindow() // call this to inttialize the camera aspects ratio
+  scene = new THREE.Scene()
+  scene.fog = new THREE.Fog(0xcccccc, 10, 300);
 
-
-
-// scene.environment = renderTarget.texture;
-
-function makeRenderer(
-  canvas: HTMLCanvasElement
-): THREE.WebGLRenderer {
+}
+function makeRenderer(canvas: HTMLCanvasElement): THREE.WebGLRenderer {
   const context: WebGL2RenderingContext | null = canvas.getContext('webgl2') // get the context, which is used in the scene setup
-  if (context == null) throw new Error('BAD CONTEXT INIT FAIL')
+  if (context === null) throw new Error('BAD CONTEXT INIT FAIL') //TODO: this comparison probably shouldn't be done with a === to a null ngl
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     canvas,
@@ -50,12 +73,23 @@ function makeRenderer(
     outputBufferType: THREE.HalfFloatType
   })
 
-  renderer.setPixelRatio(window.devicePixelRatio)
+
+
+  //POST PROCESSING SETUP
+
+  renderer.setPixelRatio(window.devicePixelRatio * 1.5)
   renderer.setSize(window.innerWidth, window.innerHeight)
-  renderer.setAnimationLoop(animate)
 
   renderer.toneMapping = THREE.ACESFilmicToneMapping
-  renderer.toneMappingExposure = 0.04
+  renderer.toneMappingExposure = 0.03
+
+	// const composer = new EffectComposer( renderer );
+
+	const taaRenderPass = new TAARenderPass( scene, camera );
+  taaRenderPass.unbiased = false;
+  // composer.addPass( taaRenderPass );
+
+
 
   const bloomPass = new UnrealBloomPass(
     new THREE.Vector2(window.innerWidth, window.innerHeight),
@@ -66,8 +100,11 @@ function makeRenderer(
   bloomPass.threshold = 0
   bloomPass.strength = 0.1
   bloomPass.radius = 1
+
+  // composer.addPass( bloomPass );
+
   renderer.setEffects([bloomPass])
-  renderer.setClearColor(0xff00ff, 1)
+  renderer.setClearColor(0xff00ff, 1) //Purple for bugs
 
   renderer.debug.onShaderError = (
     gl,
@@ -81,24 +118,39 @@ function makeRenderer(
     console.log(gl.getProgramInfoLog(program))
   }
 
+  renderer.setAnimationLoop(animate)
   return renderer
 }
 
-function onWindowResize() {
-  if (renderer == null) return
+function resizeWindow() {
+  //this basically handles the aspect ratio of the rendered scene if you change the window
+  if (renderer === null) return
   camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight)
 }
+
+function animate() {
+  //TODO: animation logic here
+  const time = performance.now() * 0.001;
+  const delta = timer.getDelta();
+
+  timer.update();
+
+  if (water) {
+    water.material.uniforms['time'].value += delta;
+  }
+
+  renderer?.render(scene, camera)
+}
+
 
 function skySetup() {
   const sky = new Sky()
   sky.scale.setScalar(450000)
 
   // Initialize the sky, this is CRITICAL
-
   const skyUniforms = sky.material.uniforms
-
   skyUniforms.turbidity.value = 5
   skyUniforms.rayleigh.value = 1.5
   skyUniforms.mieCoefficient.value = 0.0025
@@ -109,75 +161,95 @@ function skySetup() {
 
   const sun = new THREE.Vector3()
 
-  const elevation = 90
-  const azimuth = 180
+  const elevation = 15
+  const azimuth = 190
 
   sun.setFromSphericalCoords(
     1,
     THREE.MathUtils.degToRad(90 - elevation),
     THREE.MathUtils.degToRad(azimuth)
   )
-
   skyUniforms.sunPosition.value.copy(sun)
 
   //rendering the environment so that it casts shadows properly using a prenem
-  const pmremGenerator = new THREE.PMREMGenerator(renderer);
-  const sceneEnv = new THREE.Scene();
-  let renderTarget: THREE.WebGLRenderTarget;
+  const pmremGenerator = new THREE.PMREMGenerator(renderer)
+  const sceneEnv = new THREE.Scene()
+  let renderTarget: THREE.WebGLRenderTarget
   function setEnvironment() {
-    if (renderTarget !== undefined) renderTarget.dispose();
+    if (renderTarget !== undefined) renderTarget.dispose()
 
-    sceneEnv.add(sky);
-    renderTarget = pmremGenerator.fromScene(sceneEnv);
-    scene.add(sky);
+    sceneEnv.add(sky)
+    renderTarget = pmremGenerator.fromScene(sceneEnv)
+    scene.add(sky)
 
-    scene.environment = renderTarget.texture;
+    scene.environment = renderTarget.texture
 
   }
   setEnvironment()
-
-
-
   scene.add(sky)
-
-
 }
 
-function sceneSetup(canvas: HTMLCanvasElement) {
-  renderer = makeRenderer(canvas)
-  if (renderer == null) return
+function waterSetup() {
 
-  camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
-  // camera.position.z = 2
-  // camera.position.y = 0.5
-  // camera.rotateX(-0.2)
-  camera.aspect = window.innerWidth / window.innerHeight
-  camera.updateProjectionMatrix()
+  const waterGeometry = new THREE.PlaneGeometry(10000, 10000);
 
-  scene = new THREE.Scene()
+  water = new Water(
+    waterGeometry,
+    {
+      textureWidth: 512,
+      textureHeight: 512,
+      waterNormals: new THREE.TextureLoader().load("/environment/texture/waternormals.jpg", function (texture) {
 
-  renderer.setAnimationLoop(animate)
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+
+      }),
+      sunDirection: new THREE.Vector3(),
+      sunColor: 0xffffff,
+      waterColor: 0x001e0f,
+      distortionScale: 3.7,
+      fog: scene.fog !== undefined
+    }
+  );
+  water.material.uniforms.size.value = 50;
+
+  water.rotation.x = - Math.PI / 2;
+
+
+  scene.add(water);
 }
 
-export function environment(
-  canvas: HTMLCanvasElement
-) {
-  sceneSetup(canvas)
+function isMesh (object: THREE.Object3D): object is THREE.Mesh {
+  return object.type === "Mesh";
+}
 
-  // load the city
-  const gltfLoader = new GLTFLoader();
-  const url = '/environment/city.glb';
+
+//TODO: maybe move this into its own file, since there is more stuff that I wanna do with this
+// Also i gotta typecheck the material
+function modelSetup() {
+  const gltfLoader = new GLTFLoader()
+  const url = '/environment/city.glb'
   gltfLoader.load(url, (gltf) => {
-    const root = gltf.scene;
-    scene.add(root);
+    model = gltf.scene
 
-    const sceneCam : THREE.Camera = gltf.cameras['0']
+    model.children.forEach(element => {
+
+      if (isMesh(element)) {
+        const mesh = element as THREE.Mesh
+        const material = mesh.material as THREE.MeshStandardMaterial
+        material.metalness = 0.9
+        material.roughness = 0.1
+      }
+
+      console.log(element)
+
+    }
+  );
+
+    scene.add(model)
+
+    const sceneCam: THREE.Camera = gltf.cameras['0']
     camera = sceneCam as THREE.PerspectiveCamera
-    
-  });
-  
 
-  skySetup()
+  })
 
-  window.addEventListener('resize', onWindowResize)
 }
