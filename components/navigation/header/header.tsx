@@ -14,13 +14,13 @@ export function Header() {
         "sticky z-100 " +
         "flex flex-col " +
         "flex items-center justify-start " +
-        "bounce-transition " +
+        "bounce-transition pointer-events-none" +
         (isHidden ? " -top-24" : " top-0");
 
     //show or hide the little down arrow
     return (
         <div className={headerClass}>
-            <div className="flex flex-row items-center w-full shadow-xl bg-transparent backdrop-blur-md h-24 p-4">
+            <div className="flex flex-row items-center w-full shadow-xl bg-transparent backdrop-blur-md h-24 p-4 pointer-events-auto">
                 <div className="flex-auto ">
                     <Button Icon={PiHouse} text="Home" href="/" />
                 </div>

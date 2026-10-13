@@ -5,20 +5,18 @@ import { publishDate } from "../_components/publishDate/publishDate";
 import { Suspense } from "react";
 import Image from "next/image";
 
+//this is async because we need to wait for the slug to resolve in the generateStaticParams before we can use it
 export default async function Page({
     params,
 }: {
     params: Promise<{ slug: string }>;
 }) {
     const { slug } = await params;
-
-    //PROSE IS REALLY IMPORTANT
-
     const { default: Post } = await import(
         `@/content/blogPosts/${slug}/content.mdx`
     );
     const postMeta: postMeta = await getMeta(slug);
-
+    //each blog post uses the styling contained here VVV
     return (
         <div className="flex grow flex-col max-w-[65%] justify-center gap-10">
             <h1>{postMeta.title}</h1>
@@ -28,9 +26,9 @@ export default async function Page({
             </div>
 
             <div className="relative w-full h-200 overflow-clip rounded-2xl shadow-2xl">
-                {blogImage(slug, postMeta.image_url, postMeta.image_alt)}
+                {blogImage(slug)}
             </div>
-
+            {/*PROSE IS REALLY IMPORTANT, basically it populates the md file with the corresponding html styled elements*/}
             <div className="dark-gradient flex grow flex-col rounded-xl p-10 text-[white] shadow-2xl prose max-w-none w-full">
                 <Post />
             </div>
@@ -38,8 +36,9 @@ export default async function Page({
     );
 }
 
-export function generateStaticParams() {
-    const currentPosts = listPosts();
+export async function generateStaticParams() {
+    //gets all the posts from the blog_post_dir, and each posts gets its own dir
+    const currentPosts = await listPosts();
     const params: { slug: string }[] = [];
     try {
         currentPosts.forEach((post) => {
@@ -50,13 +49,13 @@ export function generateStaticParams() {
         notFound();
     }
 
-    return params; //idealy, this should automatically search through the "content" directory and fetch all the file names, and use that as the slug
+    return params;
 }
 
 export const dynamicParams = false;
 
-//TODO: UNIFY BOTH BLOG IMAGE GETTING FUNCTIONS INTO ONE, MAKE IT CORRECT AND ADD A SUSPENSE
-function blogImage(slug: string, image_url?: string, image_alt?: string) {
+//VV TEMPORARY, WILL GET CHANGED
+function blogImage(slug: string) {
     //image can be externally hosted image, or an image hosted in the directory
     return (
         <Suspense>
@@ -66,11 +65,9 @@ function blogImage(slug: string, image_url?: string, image_alt?: string) {
                     "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 }
                 objectFit="cover"
-                alt={image_alt ? image_alt : "Blog Image"}
+                alt={"Blog Image"}
                 id={slug}
             />
         </Suspense>
     );
 }
-//TODO: have a custom image error handler
-function blogImageError() {}

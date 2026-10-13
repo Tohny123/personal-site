@@ -1,57 +1,45 @@
-import fs from "fs";
 import path from "path";
-import { readFile } from "node:fs/promises";
-
-// this should read the /blogPosts directory, get all the files, and provide a buncha resources, (like a list of slugs or the ability to get the last modified date / created date)
-
+import { readFile, readdir, stat } from "node:fs/promises";
 const BLOG_POST_DIR = path.join(process.cwd(), "content", "blogPosts");
 
-export type postMeta = {
+
+export interface postMeta {
     title: string;
     publishedDate: string;
     summary: string;
-    image_url?: string;
-    image_alt?: string;
     tags?: string[];
-};
+}
 
-export function listPosts(): string[] {
+export async function listPosts(): Promise<string[]> {
     /**
-     * search through all the posts on the site, returns an array of slugs
-     * use only for initalization, since its blocking
+     * Search through all the posts on the site, returns an array of slugs. Use only for initalization, since its blocking
+     *
+     * @returns A string promise for a list of all the posts in the BLOG_POST_DIR
      */
-    const folders: string[] = fs.readdirSync(BLOG_POST_DIR);
-    folders.forEach((folderName) => {
-        //check if there aren't folders in the posts dir
-        const curDir: string = path.join(BLOG_POST_DIR, folderName);
-        if (!fs.statSync(curDir).isDirectory()) {
-            console.log(folderName);
-            throw new Error("Folder has forbidden character or isn't folder");
-        }
+    return readdir(BLOG_POST_DIR).then(async (folders: string[]) => {
+        //validate if the entire directory contains folders, and catches if there are files
+        folders.forEach(async (folderName) => {
+            const curDir: string = path.join(BLOG_POST_DIR, folderName);
+            const curStat = await stat(curDir);
+            if (!curStat.isDirectory()) {
+                throw new Error(
+                    "File/Invalid folder found in directory! check " +
+                        BLOG_POST_DIR,
+                );
+            }
+        });
+        return folders;
     });
-    return folders;
 }
 
 function isPostMeta(data: unknown): data is postMeta {
     /**
-     * validate if the format of meta.json is correct or not
+     * Validate if the format of meta.json is correct or not
+     *
+     * @param {unknown} data - given data, unknown type
+     *
      */
     if (data != null && typeof data === "object") {
-        if (
-            Object.hasOwn(data, "image_url") &&
-            typeof (data as Record<string, unknown>).image_url !== "string"
-        ) {
-            return false;
-        }
-
-        if (
-            Object.hasOwn(data, "image_alt") &&
-            typeof (data as Record<string, unknown>).image_alt !== "string" &&
-            Object.hasOwn(data, "image_url") //can't have image alt without image tag
-        ) {
-            return false;
-        }
-
         if (
             Object.hasOwn(data, "tags") &&
             (!Array.isArray((data as Record<string, unknown>).tags) ||
@@ -74,7 +62,10 @@ function isPostMeta(data: unknown): data is postMeta {
 
 export async function getMeta(post: string): Promise<postMeta> {
     /**
-     * given a post slug, give its metadata
+     * Given a post slug, give its metadata
+     *
+     * @param {string} post - the slug of the post
+     * @returns {Promise<postMeta>} returns an object of postMeta containing the info of the post
      *
      */
     try {
