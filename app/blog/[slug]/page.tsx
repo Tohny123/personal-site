@@ -1,9 +1,9 @@
 import { listPosts, getMeta, postMeta } from "@/util/blogUtil";
 import { notFound } from "next/navigation";
-import { tagList } from "../_components/tagList/tagList";
-import { publishDate } from "../_components/publishDate/publishDate";
+import { tagList } from "../_components/tagList";
+import { publishDate } from "../_components/publishDate";
+import blogThumb  from '../_components/blogThumb'
 import { Suspense } from "react";
-import Image from "next/image";
 
 //this is async because we need to wait for the slug to resolve in the generateStaticParams before we can use it
 export default async function Page({
@@ -25,9 +25,9 @@ export default async function Page({
                 {publishDate(postMeta.publishedDate)}
             </div>
 
-            <div className="relative w-full h-200 overflow-clip rounded-2xl shadow-2xl">
-                {blogImage(slug)}
-            </div>
+              <Suspense>
+                {blogThumb(slug)}
+              </Suspense>
             {/*PROSE IS REALLY IMPORTANT, basically it populates the md file with the corresponding html styled elements*/}
             <div className="dark-gradient flex grow flex-col rounded-xl p-10 text-[white] shadow-2xl prose max-w-none w-full">
                 <Post />
@@ -53,21 +53,3 @@ export async function generateStaticParams() {
 }
 
 export const dynamicParams = false;
-
-//VV TEMPORARY, WILL GET CHANGED
-function blogImage(slug: string) {
-    //image can be externally hosted image, or an image hosted in the directory
-    return (
-        <Suspense>
-            <Image
-                fill={true}
-                src={
-                    "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                }
-                objectFit="cover"
-                alt={"Blog Image"}
-                id={slug}
-            />
-        </Suspense>
-    );
-}

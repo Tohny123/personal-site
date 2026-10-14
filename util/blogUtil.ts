@@ -2,7 +2,6 @@ import path from "path";
 import { readFile, readdir, stat } from "node:fs/promises";
 const BLOG_POST_DIR = path.join(process.cwd(), "content", "blogPosts");
 
-
 export interface postMeta {
     title: string;
     publishedDate: string;
@@ -16,8 +15,8 @@ export async function listPosts(): Promise<string[]> {
      *
      * @returns A string promise for a list of all the posts in the BLOG_POST_DIR
      */
-    return readdir(BLOG_POST_DIR).then(async (folders: string[]) => {
-        //validate if the entire directory contains folders, and catches if there are files
+    try {
+        const folders: string[] = await readdir(BLOG_POST_DIR);
         folders.forEach(async (folderName) => {
             const curDir: string = path.join(BLOG_POST_DIR, folderName);
             const curStat = await stat(curDir);
@@ -29,7 +28,10 @@ export async function listPosts(): Promise<string[]> {
             }
         });
         return folders;
-    });
+    } catch (err) {
+        console.error(err);
+        throw new Error("LISTPOST ERROR");
+    }
 }
 
 function isPostMeta(data: unknown): data is postMeta {

@@ -25,7 +25,7 @@ function linkElement(
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    {linkText} <PiArrowSquareOut size={24} className="m-1"/>
+                    {linkText} <PiArrowSquareOut size={24} className="m-1" />
                 </a>
             </div>
         </div>

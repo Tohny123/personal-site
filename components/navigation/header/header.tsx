@@ -6,7 +6,6 @@ import { PiBookOpen } from "react-icons/pi";
 import { PiHammer } from "react-icons/pi";
 import { PiCaretDownBold } from "react-icons/pi";
 
-
 export function Header() {
     const isHidden: boolean = HideHeader();
     //default consts of the header, and we adjust the offsets depending on scrollDirection
