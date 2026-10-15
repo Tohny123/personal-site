@@ -1,8 +1,6 @@
 import blogCard from "./_components/blogCard";
 import { listPosts } from "@/util/blogUtil";
-import { Suspense } from "react";
 //TODO: add a loading circle component
-
 
 export default function BlogHome() {
     return (
@@ -12,9 +10,7 @@ export default function BlogHome() {
                 Welcome to my blog! This is where I put my ideas that, at least
                 I think, deserve to be written about.
             </h3>
-            <Suspense>
-              {postGrid()}
-            </Suspense>
+            {postGrid()}
         </div>
     );
 }

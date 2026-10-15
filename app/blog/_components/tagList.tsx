@@ -15,7 +15,7 @@ export function tagList(tagArr?: string[]) {
     }
 
     return (
-        <div className="flex flex-row gap-4 text-white items-center">
+        <div className="flex flex-row gap-4 text-white items-center flex-wrap">
             <h4>{tagArr ? "Tags:" : null} </h4>
             {tagArr ? tagArr.map((tag) => tagElement(tag)) : null}
         </div>
