@@ -54,7 +54,13 @@
         );
 
     --text-filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.3));
-    --text-bg: linear-gradient(180deg,rgba(255,255,255, 0.1) 0%, white 20%, white 50%, rgba(255,255,255, 0.1) 100%);
+    --text-bg: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        white 20%,
+        white 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
 
     --light-shine: linear-gradient(00deg, white 0%, rgba(255, 255, 255, 0));
     --border-gradient: linear-gradient(

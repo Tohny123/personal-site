@@ -29,7 +29,12 @@ export function BackToTop() {
         <div
             className={`fixed right-0 m-10 z-100 bounce-transition ${scrollPos < 500 ? "-bottom-25" : "bottom-0"} `}
         >
-            <button onClick={scrollToTop} className="before:gloss-effect" aria-label="Scroll To Top" title="Scroll To Top">
+            <button
+                onClick={scrollToTop}
+                className="before:gloss-effect"
+                aria-label="Scroll To Top"
+                title="Scroll To Top"
+            >
                 <PiArrowUp size={40} />
             </button>
         </div>
