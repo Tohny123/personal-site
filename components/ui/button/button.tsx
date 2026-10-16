@@ -1,19 +1,23 @@
-import { IconType } from 'react-icons'
-import Link from 'next/link'
+import { IconType } from "react-icons";
+import Link from "next/link";
 
 interface buttonTypes {
-  Icon?: IconType,
-  text?: string,
-  href: string,
+    Icon?: IconType;
+    text?: string;
+    href: string;
 }
 
 export function Button({ Icon, text, href = "/" }: buttonTypes) {
-  return (
-    <Link href={href}>
-      <button className='button before:gloss-effect flex flex-row gap-3 items-center' aria-label={text} title={text}>
-        {Icon ? <Icon size={26}/> : ' '}
-        {text ? text : ''}
-      </button>
-    </Link>
-  )
+    return (
+        <Link href={href}>
+            <button
+                className="button before:gloss-effect flex flex-row gap-3 items-center"
+                aria-label={text}
+                title={text}
+            >
+                {Icon ? <Icon size={26} /> : " "}
+                {text ? text : ""}
+            </button>
+        </Link>
+    );
 }
