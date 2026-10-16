@@ -23,13 +23,20 @@ import { EffectComposer } from 'three/examples/jsm/Addons.js'
  *
  */
 
+/**
+ * organization plan
+ * scene (contains renderer, post processing, and scaling)
+ * world (sky and water)
+ * model (self expalntory)
+ */
+
 
 
 //3d rendering globals
 let camera: THREE.PerspectiveCamera
 let renderer: THREE.WebGLRenderer
 let scene: THREE.Scene
-let timer: THREE.Timer
+let timer: THREE.Timer //animation timer
 
 let water: Water
 

@@ -14,7 +14,7 @@ const Canvas = (ref: React.Ref<HTMLCanvasElement>, props: propsType) => {
 
 
 export function Background(props:propsType) {
-  const CanvasRef = React.useRef<HTMLCanvasElement>(null) // Create a new ref that stores the current canvas state
+  const CanvasRef = React.useRef<HTMLCanvasElement>(null) // Create a new ref that stores the current canvas state, when the environment loads, this ref updates with the actual canvas of the 3d environment
   useEffect(() => {
     if (CanvasRef.current != null) {
       return environment(CanvasRef.current)
