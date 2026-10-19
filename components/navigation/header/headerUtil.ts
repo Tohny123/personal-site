@@ -52,3 +52,25 @@ export function HideHeader(): boolean {
     const mousePos = useMousePos();
     return scrollDirecton === "down" && mousePos > 100;
 }
+
+function useScroll() {
+    const [scrollPos, setScrollPos] = useState<number>(0);
+
+    useEffect(() => {
+        const updateScrollPos = () => {
+            setScrollPos(window.scrollY);
+        };
+
+        window.addEventListener("scroll", updateScrollPos);
+
+        return () => {
+            window.removeEventListener("scroll", updateScrollPos);
+        };
+    }, [scrollPos]);
+    return scrollPos;
+}
+
+export function HideBG(): boolean {
+    const scrollPos = useScroll();
+    return scrollPos <= 0;
+}

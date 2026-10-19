@@ -15,7 +15,7 @@ export default async function blogThumb(slug: string) {
                   <Image
                       fill={true}
                       src={thumbPath}
-                      alt={"Blog Image"}
+                      alt={"Blog Thumbnail"}
                       id={slug}
                       sizes="(max-width: 480px) 480px, (max-width: 1200px) 1200"
                   />
