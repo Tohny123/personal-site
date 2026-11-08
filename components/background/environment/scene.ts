@@ -35,6 +35,7 @@ export class Scene {
         this.world = new World(this.renderer, this.worldScene);
 
         //POST PROCESSING SETUP
+        //TODO: add render pipeline here
         this.renderer.setPixelRatio(window.devicePixelRatio * 1.5);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;

@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useRef, useState} from 'react'
+import React, { useEffect, useRef, useState, ViewTransition, startTransition } from 'react'
 // import { environment } from './environment'
 import { Scene } from './environment/scene'
 
@@ -9,7 +9,7 @@ export function Background(props: { className?: string }) {
   const SceneRef = useRef<Scene>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-//TODO: this useEffect causes react to run the function twice, that aint good 
+  //TODO: this useEffect causes react to run the function twice, that aint good 
 
   const Canvas = () => {
     useEffect(() => {
@@ -18,7 +18,9 @@ export function Background(props: { className?: string }) {
         //   setIsLoaded(true);
         // })
         SceneRef.current = new Scene(CanvasRef.current, () => {
-          setIsLoaded(true);
+          startTransition(() => {
+            setIsLoaded(true);
+          })
         });
       }
     })
@@ -28,7 +30,12 @@ export function Background(props: { className?: string }) {
 
   return (
     <div>
-      {!isLoaded ? <div className="bg-[#7096d4] fixed w-screen h-screen z-10" /> : false}
+      {!isLoaded ?
+        <ViewTransition enter="auto" exit="auto" default="none">
+          <div className="bg-[#7096d4] fixed w-screen h-screen" />
+        </ViewTransition>
+        :
+        false}
       {Canvas()}
     </div>
   )

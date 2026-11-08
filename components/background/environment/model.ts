@@ -33,5 +33,6 @@ export class Model {
     }
 
     animate(delta: number) {
+        
     }
 }
