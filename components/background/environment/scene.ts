@@ -4,103 +4,100 @@ import { TAARenderPass } from "three/addons/postprocessing/TAARenderPass.js";
 import { World } from "./world";
 import { Model } from "./model";
 
-//3d rendering globals
-let camera: THREE.PerspectiveCamera;
-let renderer: THREE.WebGLRenderer;
-let worldScene: THREE.Scene;
-let timer: THREE.Timer; //animation timer
 
-let world: World;
-let model: Model;
 
-//TODO: make this either async, or react with the effect
-export async function scene(canvas: HTMLCanvasElement, callback?: () => void) {
-    renderer = makeRenderer(canvas);
-    timer = new THREE.Timer();
 
-    if (renderer === null) return;
+export class Scene {
+    //3d rendering globals
+    camera!: THREE.PerspectiveCamera; // add exclaimation mark bc it will be initialized when the model loads
+    renderer: THREE.WebGLRenderer;
+    worldScene: THREE.Scene;
+    timer: THREE.Timer; //animation timer
 
-    worldScene = new THREE.Scene();
-    worldScene.fog = new THREE.Fog(0xcccccc, 10, 300);
-    world = new World(renderer, worldScene);
+    world: World;
+    model: Model;
 
-    window.addEventListener('resize', resizeWindow)
+    constructor(canvas: HTMLCanvasElement, callback: () => void) {
 
-    model = new Model((model) => {
-        if (model.camera && model.geometry) {
-            camera = model.camera;
-            worldScene.add(model.geometry)
-            resizeWindow(); // call this to inttialize the camera aspects ratio
+        //MAKE RENDERER
+        const context: WebGL2RenderingContext | null = canvas.getContext("webgl2"); // get the context, which is used in the scene setup
+        if (context === null) throw new Error("BAD CONTEXT INIT FAIL"); //TODO: this comparison probably shouldn't be done with a === to a null ngl
+        this.renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            canvas,
+            context,
+            outputBufferType: THREE.HalfFloatType,
+        });
 
-            if (callback) {
-                callback();
+        this.timer = new THREE.Timer();
+        this.worldScene = new THREE.Scene();
+        this.worldScene.fog = new THREE.Fog(0xcccccc, 10, 300);
+        this.world = new World(this.renderer, this.worldScene);
+
+        //POST PROCESSING SETUP
+        this.renderer.setPixelRatio(window.devicePixelRatio * 1.5);
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        this.renderer.toneMappingExposure = 0.03;
+        const taaRenderPass = new TAARenderPass(this.worldScene, this.camera);
+        taaRenderPass.unbiased = false;
+
+        const bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            1.5,
+            0.4,
+            0.85,
+        );
+        bloomPass.threshold = 0;
+        bloomPass.strength = 0.1;
+        bloomPass.radius = 1;
+        this.renderer.setEffects([bloomPass]);
+        this.renderer.setClearColor(0xff00ff, 1);
+        this.renderer.debug.onShaderError = (gl, program, vs, fs) => {
+            console.log("SHADER ERROR");
+            console.log(gl.getShaderInfoLog(vs));
+            console.log(gl.getShaderInfoLog(fs));
+            console.log(gl.getProgramInfoLog(program));
+        };
+
+
+        const animate = () => {
+            //TODO: animation logic here
+            if (this.timer) {
+                const delta = this.timer.getDelta();
+                this.world.animate(delta);
+                this.model.animate(delta);
+                this.timer.update();
+            }
+            if (this.camera && this.worldScene) {
+                this.renderer?.render(this.worldScene, this.camera);
             }
         }
-    });
 
-}
+        this.renderer.setAnimationLoop(animate);
 
-function makeRenderer(canvas: HTMLCanvasElement): THREE.WebGLRenderer {
-    const context: WebGL2RenderingContext | null = canvas.getContext("webgl2"); // get the context, which is used in the scene setup
-    if (context === null) throw new Error("BAD CONTEXT INIT FAIL"); //TODO: this comparison probably shouldn't be done with a === to a null ngl
-    const renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        canvas,
-        context,
-        outputBufferType: THREE.HalfFloatType,
-    });
+        const resizeWindow = () => {
+            //this basically handles the aspect ratio of the rendered scene if you change the window
+            if (this.renderer === null) return;
+            this.camera.aspect = window.innerWidth / window.innerHeight;
+            this.camera.updateProjectionMatrix();
+            this.renderer.setSize(window.innerWidth, window.innerHeight);
+        }
 
-    //POST PROCESSING SETUP
-    postProcessingSetup(renderer); //Purple for bugs
-    renderer.debug.onShaderError = (gl, program, vs, fs) => {
-        console.log("SHADER ERROR");
-        console.log(gl.getShaderInfoLog(vs));
-        console.log(gl.getShaderInfoLog(fs));
-        console.log(gl.getProgramInfoLog(program));
-    };
-    renderer.setAnimationLoop(animate);
-    return renderer;
-}
+        window.addEventListener('resize', resizeWindow)
 
-function postProcessingSetup(renderer: THREE.WebGLRenderer) {
-    renderer.setPixelRatio(window.devicePixelRatio * 1.5);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.03;
-    const taaRenderPass = new TAARenderPass(worldScene, camera);
-    taaRenderPass.unbiased = false;
+        this.model = new Model((model) => {
+            if (model.camera && model.geometry) {
+                this.camera = model.camera;
+                this.worldScene.add(model.geometry)
+                resizeWindow(); // call this to inttialize the camera aspects ratio
 
-    const bloomPass = new UnrealBloomPass(
-        new THREE.Vector2(window.innerWidth, window.innerHeight),
-        1.5,
-        0.4,
-        0.85,
-    );
-    bloomPass.threshold = 0;
-    bloomPass.strength = 0.1;
-    bloomPass.radius = 1;
-    renderer.setEffects([bloomPass]);
-    renderer.setClearColor(0xff00ff, 1);
-}
-
-function resizeWindow() {
-    //this basically handles the aspect ratio of the rendered scene if you change the window
-    if (renderer === null) return;
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-
-function animate() {
-    //TODO: animation logic here
-    const delta = timer.getDelta();
-
-    world.animate(delta);
-    model.animate(delta);
-
-    timer.update();
-    if (camera && worldScene) {
-        renderer?.render(worldScene, camera);
+                if (callback) {
+                    callback();
+                }
+            }
+        });
     }
+
 }
+

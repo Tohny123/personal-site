@@ -8,7 +8,7 @@ function isMesh(object: THREE.Object3D): object is THREE.Mesh {
 export class Model {
     geometry: THREE.Group<THREE.Object3DEventMap> | null = null;
     camera: THREE.PerspectiveCamera | null = null;
-    constructor(callback: (model:Model) => void) {
+    constructor(callback: (model: Model) => void) {
         const gltfLoader = new GLTFLoader();
         const url = "/environment/city.glb";
         gltfLoader.load(url,
@@ -27,14 +27,11 @@ export class Model {
                 });
                 // camera = sceneCam as THREE.PerspectiveCamera
                 this.camera = gltf.cameras["0"] as THREE.PerspectiveCamera;
-                console.log(this.geometry)
-                
-                callback(this);
 
+                callback(this);
             });
     }
 
     animate(delta: number) {
-        console.log("Animating" + delta)
     }
 }

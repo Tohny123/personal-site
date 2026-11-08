@@ -1,19 +1,25 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState} from 'react'
 // import { environment } from './environment'
-import { scene } from './environment/scene'
+import { Scene } from './environment/scene'
 
 // we initialize this canvas as a JSX object, storing the current state in a Ref so that it doesn't get affected by reacts rendering logic
 export function Background(props: { className?: string }) {
-  const CanvasRef = React.useRef<HTMLCanvasElement>(null) // Create a new ref that stores the current canvas state, when the environment loads, this ref updates with the actual canvas of the 3d environment
-  const [isLoaded, setIsLoaded] = React.useState(false);
+  const CanvasRef = useRef<HTMLCanvasElement>(null) // Create a new ref that stores the current canvas state, when the environment loads, this ref updates with the actual canvas of the 3d environment
+  const SceneRef = useRef<Scene>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+//TODO: this useEffect causes react to run the function twice, that aint good 
 
   const Canvas = () => {
     useEffect(() => {
       if (CanvasRef.current != null) {
-        scene(CanvasRef.current, () => {
+        // scene(CanvasRef.current, () => {
+        //   setIsLoaded(true);
+        // })
+        SceneRef.current = new Scene(CanvasRef.current, () => {
           setIsLoaded(true);
-        })
+        });
       }
     })
 
