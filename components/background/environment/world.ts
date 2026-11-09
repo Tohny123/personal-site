@@ -23,7 +23,7 @@ export class World {
         this.sky = this.skySetup();
     }
 
-    skySetup() {
+    private skySetup() {
         const sky = new Sky();
         sky.scale.setScalar(450000);
 
@@ -39,8 +39,8 @@ export class World {
 
         const sun = new THREE.Vector3();
 
-        const elevation = 15;
-        const azimuth = 190;
+        const elevation = 50;
+        const azimuth = 200;
 
         sun.setFromSphericalCoords(
             1,
@@ -67,7 +67,7 @@ export class World {
         return sky;
     }
 
-    waterSetup(): Water {
+    private waterSetup(): Water {
         const waterGeometry = new THREE.PlaneGeometry(10000, 10000);
 
         const water = new Water(waterGeometry, {
