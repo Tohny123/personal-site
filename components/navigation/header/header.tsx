@@ -20,7 +20,7 @@ export function Header() {
         "flex flex-row items-center transition-all" +
         " w-full bg-transparent backdrop-blur-md" +
       " h-24 p-4 pointer-events-auto " +
-        (hideBG ? "shadow-none" : "shadow-xl");
+        (hideBG ? "shadow-none" : "shadow-md");
 
     //show or hide the little down arrow
     return (
