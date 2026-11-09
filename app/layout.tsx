@@ -43,9 +43,8 @@ export default function RootLayout({
                     Skip to main content
                 </a>
 
-                {/* <Background className='fixed w-full h-full -z-10' /> */}
-                <div className="bg-[#7096d4] fixed w-screen h-screen -z-10" />
-                {/*^^^^ TEMPORARY TODO CHANGE LATER */}
+                <Background className='fixed w-full h-full -z-10' />
+                {/* <div className="bg-[#7096d4] fixed w-screen h-screen -z-10" /> */}
                 <Header />
                 <BackToTop />
                 <div
