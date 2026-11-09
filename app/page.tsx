@@ -2,6 +2,8 @@
 // import Link from 'next/link'
 import Image from "next/image";
 import { PiMapPin } from "react-icons/pi";
+import { Button } from "@/components/ui/button/button";
+import { PiBookOpen } from "react-icons/pi";
 
 export default function Home() {
     return (
@@ -21,21 +23,28 @@ export default function Home() {
                     <h3>Based in: Brooklyn, NY</h3>
                 </div>
             </div>
-            <div className="px-40 py-60">
+            <div className="px-40 py-60 w-full">
                 <h1>Who am I?</h1>
-                <div className="flex-row flex w-full">
+                <div className="flex-row flex w-full gap-6">
                     <Image
                         src="/img/home/photo.jpg"
-                        alt="It's me!"
+                        alt="Its me!"
                         width="400"
                         height="1200"
                         className="rounded-2xl shadow-2xl"
                     />
-                    <div>
-                        <div className=" light-gradient w-full">TEST</div>
+                    <div className="flex-col w-full flex justify-center gap-2">
+                        <div className=" dark-gradient w-full p-5 rounded-2xl flex flex-row text-white ">
+                            <p>Hi, My name is Tony Cui, blah blah blah blah blah</p>
+                        </div>
+                        <div className="flex flex-row gap-2">
+                            <Button Icon={PiBookOpen} text="Resume" href="/resources/resume.pdf" />
+                            <Button Icon={PiBookOpen} text="Resume" href="/" />
+                        </div>
                     </div>
                 </div>
             </div>
+            <div className="px-40 py-60"></div>
         </main>
     );
 }
