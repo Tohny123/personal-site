@@ -4,6 +4,7 @@ import Image from "next/image";
 import { PiMapPin } from "react-icons/pi";
 import { Button } from "@/components/ui/button/button";
 import { PiBookOpen } from "react-icons/pi";
+import { listPosts } from "@/util/blogUtil"
 
 export default function Home() {
     return (
@@ -35,16 +36,26 @@ export default function Home() {
                     />
                     <div className="flex-col w-full flex justify-center gap-2">
                         <div className=" dark-gradient w-full p-5 rounded-2xl flex flex-row text-white ">
-                            <p>Hi, My name is Tony Cui, blah blah blah blah blah</p>
+                            <p>Hi, My name is Tony Cui, blah blah blah blah blah <br/></p>
                         </div>
                         <div className="flex flex-row gap-2">
                             <Button Icon={PiBookOpen} text="Resume" href="/resources/resume.pdf" />
-                            <Button Icon={PiBookOpen} text="Resume" href="/" />
+                            <Button Icon={PiBookOpen} text="Email" href="/" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="px-40 py-60"></div>
+            <div className="px-40 py-60">
+                <h1>Keep up with my thoughts!</h1>
+                <div className="w-full flex flex-row">
+                    
+                </div>  
+            </div>
         </main>
     );
+}
+
+async function postSlideshow() {
+    const recentPosts: string[] = await listPosts();
+
 }
