@@ -37,7 +37,6 @@ export function Footer() {
         <footer className="main-shadow backdrop-blur-md dark-gradient border-2 border-b-0 border-white footer rounded-t-3xl grid grid-cols-2 p-14 pb-25">
             <div className=" justify-center items-center col-span-1 px-25 flex flex-col gap-5">
                 <h2 className="text-6xl text-center py-2">
-
                     Thanks for stopping by!
                 </h2>
                 <PiHeart size={70} color="white" />

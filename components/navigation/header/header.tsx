@@ -7,8 +7,8 @@ import { PiHammer } from "react-icons/pi";
 import { PiCaretDownBold } from "react-icons/pi";
 
 export function Header() {
-  const hideHeader: boolean = HideHeader();
-  const hideBG: boolean = HideBG();
+    const hideHeader: boolean = HideHeader();
+    const hideBG: boolean = HideBG();
     //default consts of the header, and we adjust the offsets depending on scrollDirection
     const headerClass =
         "sticky z-100 " +
@@ -19,14 +19,14 @@ export function Header() {
     const bgClass =
         "flex flex-row items-center transition-all" +
         " w-full bg-transparent backdrop-blur-md" +
-      " h-24 p-4 pointer-events-auto " +
+        " h-24 p-4 pointer-events-auto " +
         (hideBG ? "shadow-none" : "shadow-md");
 
     //show or hide the little down arrow
     return (
         <div className={headerClass}>
-        <div className={bgClass}>
-                <div >
+            <div className={bgClass}>
+                <div>
                     <Button Icon={PiHouse} text="Home" href="/" />
                 </div>
 

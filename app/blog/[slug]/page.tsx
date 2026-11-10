@@ -2,7 +2,7 @@ import { listPosts, getMeta, postMeta } from "@/util/blogUtil";
 import { notFound } from "next/navigation";
 import { tagList } from "../_components/tagList";
 import { publishDate } from "../_components/publishDate";
-import blogThumb  from '../_components/blogThumb'
+import blogThumb from "../_components/blogThumb";
 //this is async because we need to wait for the slug to resolve in the generateStaticParams before we can use it
 export default async function Page({
     params,
@@ -22,7 +22,7 @@ export default async function Page({
                 {tagList(postMeta.tags)}
                 {publishDate(postMeta.publishedDate)}
             </div>
-                {blogThumb(slug)}
+            {blogThumb(slug)}
             {/*PROSE IS REALLY IMPORTANT, basically it populates the md file with the corresponding html styled elements*/}
             <div className="dark-gradient flex grow flex-col rounded-xl p-10 text-[white] shadow-2xl prose max-w-none w-full">
                 <Post />

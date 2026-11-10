@@ -78,10 +78,20 @@
 
 @utility dark-gradient {
     background: var(--gradient-darkpurple);
+    backdrop-filter: blur(10px);
+    border-width: 2px;
+    border-color: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0px 5px 10px 2px rgba(0, 39, 99, 0.2);
 }
 
 @utility light-gradient {
     background: var(--gradient-lightblue);
+    backdrop-filter: blur(10px);
+    border-width: 2px;
+    border-color: rgb(68, 114, 196);
+    border-radius: 15px;
+    box-shadow: 0px 5px 10px 2px rgba(0, 39, 99, 0.2);
 }
 
 @utility bounce-transition {
@@ -174,20 +184,25 @@ body {
         background: var(--gradient-lightblue);
         backdrop-filter: blur(10px);
         border-width: 2px;
-        border-color: rgba(0, 0, 0, 0.2);
+        border-color: rgb(68, 114, 196);
         border-radius: 15px;
         padding: 8px 23px;
         transition-duration: 250ms;
         box-shadow: 0px 5px 10px rgba(0, 39, 99, 0.2);
+        cursor: pointer;
     }
     button:hover {
         background: var(--gradient-lightblue), rgba(0, 255, 255, 0.5);
         /* background-color: white; */
-        font-weight: 500;
+        /* font-weight: 500; */
         text-decoration: underline;
     }
     button:active {
         background: rgba(121, 218, 253, 0.5);
         color: gray;
+    }
+    button:disabled {
+        background: var(--gradient-lightblue), rgba(100, 100, 100, 0.8);
+        border-color: rgb(67, 101, 155);
     }
 }
