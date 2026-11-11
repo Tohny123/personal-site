@@ -1,8 +1,4 @@
 "use client";
 export function postSlideshow() {
-    return (
-        <div className = "">
-            
-        </div>
-    );
+    return <div className=""></div>;
 }

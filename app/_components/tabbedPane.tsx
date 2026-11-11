@@ -15,47 +15,50 @@ export function TabbedPane() {
 
     return (
         <div>
-            <div className="">
-                <button
-                    className="before:gloss-effect rounded-b-none"
-                    onClick={() => {
-                        newTab("about");
-                    }}
-                    disabled={currentTab === "about"}
-                >
-                    About
-                </button>
-                <button
-                    className="before:gloss-effect rounded-b-none"
-                    onClick={() => {
-                        newTab("experience");
-                    }}
-                    disabled={currentTab === "experience"}
-                >
-                    Experience
-                </button>
-                <button
-                    className="before:gloss-effect rounded-b-none"
-                    onClick={() => {
-                        newTab("education");
-                    }}
-                    disabled={currentTab === "education"}
-                >
-                    Education
-                </button>
-                <button
-                    className="before:gloss-effect rounded-b-none"
-                    onClick={() => {
-                        newTab("languages");
-                    }}
-                    disabled={currentTab === "languages"}
-                >
-                    Languages
-                </button>
-            </div>
-            <div className="light-gradient w-full p-5 rounded-2xl rounded-tl-none flex flex-row text-white">
-                {currentPane(currentTab)}
-            </div>
+            <ViewTransition name="contentParent">
+                <div className="">
+                    <button
+                        className="before:gloss-effect rounded-b-none"
+                        onClick={() => {
+                            newTab("about");
+                        }}
+                        disabled={currentTab === "about"}
+                    >
+                        About
+                    </button>
+                    <button
+                        className="before:gloss-effect rounded-b-none"
+                        onClick={() => {
+                            newTab("experience");
+                        }}
+                        disabled={currentTab === "experience"}
+                    >
+                        Experience
+                    </button>
+                    <button
+                        className="before:gloss-effect rounded-b-none"
+                        onClick={() => {
+                            newTab("education");
+                        }}
+                        disabled={currentTab === "education"}
+                    >
+                        Education
+                    </button>
+                    <button
+                        className="before:gloss-effect rounded-b-none"
+                        onClick={() => {
+                            newTab("languages");
+                        }}
+                        disabled={currentTab === "languages"}
+                    >
+                        Languages
+                    </button>
+                </div>
+
+                <div className="light-gradient w-full p-5 rounded-2xl rounded-tl-none flex flex-row text-white">
+                    {currentPane(currentTab)}
+                </div>
+            </ViewTransition>
         </div>
     );
 }
@@ -79,7 +82,7 @@ function currentPane(currentTab: tabType) {
             content = <div>education</div>;
             break;
         case "languages":
-            content = <div>languages</div>
+            content = <div>languages</div>;
             break;
     }
     return <ViewTransition name="contentPane">{content}</ViewTransition>;

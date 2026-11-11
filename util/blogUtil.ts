@@ -12,9 +12,9 @@ export interface postMeta {
 /**
  * TODO:
  * - Sort all the posts by publishedDate, RN its just sorted in whatever order the filesystem gives, which I think is alphabetical
- * - Refactor so all the metas are returned at once, not just one meta for each post 
+ * - Refactor so all the metas are returned at once, not just one meta for each post
  * - https://nextjs.org/docs/app/getting-started/caching
- * 
+ *
  */
 
 export async function listPosts(): Promise<string[]> {
@@ -92,10 +92,8 @@ export async function getMeta(post: string): Promise<postMeta> {
     }
 }
 
-
 export async function getSortedPosts() {
-/**
- * Returns a js object of all the posts with an accociated date with it
- */
-
+    /**
+     * Returns a js object of all the posts with an accociated date with it
+     */
 }
