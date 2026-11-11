@@ -5,6 +5,7 @@ import "./globals.css";
 import { Header } from "../components/navigation/header/header";
 import { Footer } from "../components/navigation/footer/footer";
 import { Background } from "../components/background/background";
+import { ViewTransition } from "react";
 import { BackToTop } from "../components/navigation/backToTop/backToTop";
 
 const jura = Jura({
@@ -52,7 +53,7 @@ export default function RootLayout({
                     className="flex flex-col flex-1 items-center justify-center font-sans "
                     id="main-content"
                 >
-                    {children}
+                    <ViewTransition name="mainPage">{children}</ViewTransition>
                 </div>
                 <Footer />
             </body>

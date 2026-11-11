@@ -2,7 +2,7 @@
 import { useState, ViewTransition, startTransition } from "react";
 import { JSX } from "react";
 
-type tabType = "about" | "experience" | "education";
+type tabType = "about" | "experience" | "education" | "languages";
 
 export function TabbedPane() {
     const [currentTab, changeTab] = useState<tabType>("about");
@@ -43,6 +43,15 @@ export function TabbedPane() {
                 >
                     Education
                 </button>
+                <button
+                    className="before:gloss-effect rounded-b-none"
+                    onClick={() => {
+                        newTab("languages");
+                    }}
+                    disabled={currentTab === "languages"}
+                >
+                    Languages
+                </button>
             </div>
             <div className="light-gradient w-full p-5 rounded-2xl rounded-tl-none flex flex-row text-white">
                 {currentPane(currentTab)}
@@ -68,6 +77,9 @@ function currentPane(currentTab: tabType) {
             break;
         case "education":
             content = <div>education</div>;
+            break;
+        case "languages":
+            content = <div>languages</div>
             break;
     }
     return <ViewTransition name="contentPane">{content}</ViewTransition>;

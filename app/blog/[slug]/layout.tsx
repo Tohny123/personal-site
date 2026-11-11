@@ -5,7 +5,7 @@ export default function Layout({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <div className="w-full flex flex-1 flex-col items-center px-10">
+        <div className="w-full flex flex-1 flex-col items-center px-10 pb-20">
             <div className="w-full">
                 <Button Icon={PiArrowArcLeft} text="Back" href="/blog" />
             </div>
